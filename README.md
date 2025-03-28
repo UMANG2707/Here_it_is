@@ -76,3 +76,7 @@
 - CI/CD: Automated builds and deployments ensure smooth integration.
 - Branch-Based Tagging: Feature branches generate images with their branch name as a tag for better tracking.
 
+---
+### TASK 2
+---
+
