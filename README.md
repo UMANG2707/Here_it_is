@@ -13,13 +13,15 @@
 - Runs on port 5000.
 - Response Format
 - When accessed via http://localhost:5000/, the application returns a response in the following format:
-```
-{
-  "timestamp": "<current date and time>",
-  "ip": "<the IP address of the visitor>"
-}
-```
+  ```
+  {
+    "timestamp": "<current date and time>",
+    "ip": "<the IP address of the visitor>"
+  }
+  ```
+  
 ## Repository Structure
+
 ```
 ├── app
 │   ├── app.py                 # Flask application
@@ -34,25 +36,25 @@
 
 - Docker installed on your machine.
 - Pull the Docker image:
-```
-docker pull <your-dockerhub-username>/simpletimeservice:latest
-```
+  ```
+  docker pull uamng/simpletimeservice:main
+  ```
 - Run the container:
-```
-docker run -d -p 5000:5000 --name simpletimeservice <your-dockerhub-username>/simpletimeservice:latest
-```
+  ```
+  docker run -d -p 5000:5000 --name simpletimeservice uamng/simpletimeservice:main
+  ```
 - Test the service
 - Open a browser or use curl:
-```
-curl http://localhost:5000/
-```
+  ```
+  curl http://localhost:5000/
+  ```
 - Expected output:
-```
-{
-  "timestamp": "2025-03-28T14:30:00Z",
-  "ip": "127.0.0.1"
-}
-```
+  ```
+  {
+    "timestamp": "2025-03-28T14:30:00Z",
+    "ip": "127.0.0.1"
+  }
+  ```
 
 ## GitHub Actions & CI/CD Pipeline
 
