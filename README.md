@@ -80,3 +80,106 @@
 ### TASK 2
 ---
 
+## Overview
+
+- This Terraform project provisions the necessary AWS infrastructure to host and run a containerized application using ECS, ALB, and supporting resources. The infrastructure follows best practices, using Terraform modules for networking and compute resources while storing the Terraform state in an S3 backend.
+
+## Infrastructure Components
+
+### Network
+
+- Creates a VPC with:
+  - 2 Public Subnets (for the load balancer)
+  - 2 Private Subnets (for the ECS tasks)
+- Internet Gateway and Route Tables configured accordingly.
+
+### Compute
+
+- ECS Cluster: Hosts the containerized application.
+- ECS Task Definition: Defines how the container should run.
+- ECS Service: Ensures the application is always running on private subnets.
+
+### Load Balancing
+
+- Application Load Balancer (ALB) deployed in public subnets.
+- Target Group (TG) with health checks configured.
+- ALB Listener to route traffic to ECS tasks.
+
+### Other Resources
+
+- Security Groups: Restrict access to necessary ports.
+- IAM Roles & Policies: Grant required permissions for ECS tasks and ALB.
+- S3 Backend: Stores Terraform state securely with locking enabled.
+
+## Repository Structure
+
+```
+.
+├── app                 # Application files (Dockerfile, source code, etc.)
+└── terraform           # Infrastructure as Code (Terraform configurations)
+    ├── main.tf         # Defines all infrastructure resources
+    ├── providers.tf    # Specifies Terraform provider and S3 backend
+    ├── s3-backend.conf # Configuration for Terraform remote state
+    ├── terraform.tfvars# Stores variable values
+    ├── variables.tf    # Declares Terraform variables
+
+```
+
+## Deployment Steps
+
+- AWS CLI installed and configured.
+- Terraform installed.
+- AWS IAM permissions to create resources.
+
+### Steps to Deploy
+
+- Clone the Repository
+  ```
+  git clone <repo-url>
+  cd terraform
+  ```
+- Configure AWS Profile
+- Set up AWS credentials and update providers.tf with the correct profile name.
+- Create an S3 Bucket for Terraform State
+- Update s3-backend.conf with the correct values.
+- Initialize Terraform
+  ```
+  terraform init -backend-config=s3-backend.conf
+  ```
+- Plan and Apply Terraform Changes
+  ```
+  terraform plan
+  terraform apply -auto-approve
+  ```
+- Verify Deployment:
+- Use the ALB DNS name to check the application:
+- This points to the ECS service, which routes requests via the target group to the running task on port 5000.
+  
+## Automating Deployment
+
+- Updating the ECS Task Definition with a new image tag.
+- Forcing ECS Service Deployment to roll out the updated application.
+- Creating a CI/CD Pipeline to handle image updates and infrastructure changes.
+
+## Future Enhancements
+
+- Implement a CI/CD pipeline for infrastructure provisioning.
+- Parameterize image tags and automate deployments via GitHub Actions.
+- Enhance security with fine-grained IAM policies.
+
+## Recommended Deployment Process
+
+- Create a v2 branch.
+- Build and push a new image tagged v2.
+- Update ECS task definition with the new image tag.
+- Force deploy the ECS service.
+- Test the deployment using the ALB DNS.
+- Merge changes into the main branch and apply the Terraform changes.
+
+----
+
+# conclusion 
+
+This project sets up a scalable, secure, and modular AWS infrastructure for hosting containerized applications. The setup is designed for easy updates and future automation. A CI pipeline has already been implemented, allowing for manual deployments while also enabling automated deployment. Additionally, an infrastructure integration pipeline can be added by configuring AWS credentials in repository secrets to make the process fully automated.
+
+----
