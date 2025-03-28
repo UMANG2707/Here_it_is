@@ -1,7 +1,7 @@
 # SimpleTimeService
 ----
 # TASK 1
-----
+
 ## Overview
 
 - SimpleTimeService is a minimalist microservice that returns the current timestamp and the IP address of the visitor in JSON format. The service is built using Python and Flask, containerized using Docker, and automated with GitHub Actions for continuous integration and deployment.
