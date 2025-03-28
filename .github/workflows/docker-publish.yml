@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - v*
+    paths:
+      - 'app/**'
   workflow_dispatch:
 
 jobs:
