@@ -20,7 +20,7 @@
 }
 ```
 ## Repository Structure
-.
+```
 ├── app
 │   ├── app.py                 # Flask application
 │   ├── Dockerfile             # Docker configuration
@@ -28,61 +28,45 @@
 ├── .github/workflows
 │   ├── docker-publish.yml     # GitHub Actions workflow for CI/CD
 ├── README.md                  # Project documentation
+```
 
-Running the Service Locally
+## Running the Service Locally
 
-Prerequisites
-
-Docker installed on your machine.
-
-Steps
-
-Pull the Docker image:
-
+- Docker installed on your machine.
+- Pull the Docker image:
+```
 docker pull <your-dockerhub-username>/simpletimeservice:latest
-
-Run the container:
-
+```
+- Run the container:
+```
 docker run -d -p 5000:5000 --name simpletimeservice <your-dockerhub-username>/simpletimeservice:latest
-
-Test the service:
-Open a browser or use curl:
-
+```
+- Test the service
+- Open a browser or use curl:
+```
 curl http://localhost:5000/
-
-Expected output:
-
+```
+- Expected output:
+```
 {
   "timestamp": "2025-03-28T14:30:00Z",
   "ip": "127.0.0.1"
 }
+```
 
-GitHub Actions & CI/CD Pipeline
+## GitHub Actions & CI/CD Pipeline
 
-Automation Workflow
+### Automation Workflow
 
-Docker credentials are stored as GitHub repository secrets.
+- Docker credentials are stored as GitHub repository secrets.
+- On any change in the app/ directory, the GitHub Actions workflow (.github/workflows/docker-publish.yml) is triggered.
+- If a new branch is created, the Docker image is pushed to DockerHub with the branch name as the tag.
+- If changes are merged into main, the image is tagged as main.
 
-On any change in the app/ directory, the GitHub Actions workflow (.github/workflows/docker-publish.yml) is triggered.
+### Best Practices Followed
 
-If a new branch is created, the Docker image is pushed to DockerHub with the branch name as the tag.
+- Security: The application runs as a non-root user inside the container.
+- Efficiency: The Docker image is optimized to be as small as possible.
+- CI/CD: Automated builds and deployments ensure smooth integration.
+- Branch-Based Tagging: Feature branches generate images with their branch name as a tag for better tracking.
 
-If changes are merged into main, the image is tagged as main.
-
-Best Practices Followed
-
-Security: The application runs as a non-root user inside the container.
-
-Efficiency: The Docker image is optimized to be as small as possible.
-
-CI/CD: Automated builds and deployments ensure smooth integration.
-
-Branch-Based Tagging: Feature branches generate images with their branch name as a tag for better tracking.
-
-Future Enhancements
-
-Add Kubernetes deployment manifests.
-
-Implement logging and monitoring.
-
-Enhance security by implementing better access controls.
